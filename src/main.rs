@@ -1,7 +1,7 @@
-extern crate rand;
-use rand::Rng;
+mod crypto;
 
-fn main() {
-    let key_len = rand::thread_rng().gen_range(20..50);
+fn main()
+{
+    let key_len = crypto::Crypto::get_key_length();
     println! ("len: {}", key_len);
 }
