@@ -1,7 +1,7 @@
 extern crate rand;
 use rand::Rng;
 
-pub struct Crypto
+pub struct Encoder
 {
     key_len: i32,
     steps: Vec<i32>,
@@ -9,15 +9,23 @@ pub struct Crypto
     decoded_data: String
 }
 
-impl Crypto
+impl Encoder
 {
 
-    pub fn generate_new_key()
+    pub fn generate_new_key() -> Vec<i32>
     {
-        //TODO: generate a key file
+        let len = Encoder::get_key_length();
+        let mut key: Vec<i32> = Vec::new();
+
+        for i in 0..len
+        {
+            key.push(rand::thread_rng().gen_range(1..6));
+        }
+
+        key
     }
 
-    pub fn get_key_length() -> i32
+    fn get_key_length() -> i32
     {
         rand::thread_rng().gen_range(20..50)
     }
