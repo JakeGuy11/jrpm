@@ -2,6 +2,7 @@
 use std::env;
 use std::path::PathBuf;
 use std::fs;
+use home;
 mod crypto;
 
 fn main()
@@ -86,7 +87,7 @@ fn add_site() -> i32
     std::io::stdin().read_line(&mut site_keyword).unwrap_or(0);
     println! ("=============================================");
     let file_name: String = site_keyword.trim().to_owned() + ".jrpm";
-    let mut file_full_path = env::home_dir().expect("Home not found!");
+    let mut file_full_path = home::home_dir().expect("Home not found!");
     file_full_path.push(".jrpm");
     file_full_path.push(&file_name);
     if file_full_path.is_file()
@@ -104,14 +105,14 @@ fn add_site() -> i32
 fn init() -> i32
 {
     // Check if the directory exists. If it doesn't, create it
-    let mut dir_path = env::home_dir().expect("Home not found!");
+    let mut dir_path = home::home_dir().expect("Home not found!");
     dir_path.push(".jrpm");
     if dir_path.is_dir() { println! ("{:?} already exists; continuing with initiation...", dir_path); }
     else { if let Err(e) = fs::create_dir_all(dir_path) { eprintln! ("Failed to create directory: {:?}", e); } }
     
     // Check if the key exists. If it does and the user wants to overwrite it, rename it to
     // .key.old and create a new key. If it doesn't exist, just make a new key
-    let mut key_path = env::home_dir().expect("Home not found!");
+    let mut key_path = home::home_dir().expect("Home not found!");
     key_path.push(".jrpm");
     key_path.push(".key");
     if key_path.is_file()
