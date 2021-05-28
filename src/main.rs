@@ -104,15 +104,15 @@ fn add_site() -> i32
     println! ("letters, etc. to be secure. This program");
     println! ("won't make you do any of that, but you should");
     println! ("Enter your password to this site:");
-    let user_pass = String::new();
-    std::io::stdin().read_line(&mut site_keyword).unwrap_or(0);
+    let mut user_pass = String::new();
+    std::io::stdin().read_line(&mut user_pass).unwrap_or(0);
     println! ("=============================================");
 
     // Now we have the path of the file to write to.
     // Now, declare a new Encoder and encrypt the password
-    let pass_encoder = crypto::Encoder::new(&user_pass);
+    let pass_encoder = crypto::Encoder::new(user_pass.trim());
     pass_encoder.generate_encryption();
-    let encrypted_password = pass_encoder.encoded_pass;
+    let _encrypted_password = pass_encoder.encoded_pass;
     0
 }
 
