@@ -1,6 +1,4 @@
 #![allow(non_snake_case)]
-use std::env;
-use std::path::PathBuf;
 use std::fs;
 use home;
 mod crypto;
@@ -85,7 +83,6 @@ fn add_site() -> i32
     println! ("with this password:");
     let mut site_keyword = String::new();
     std::io::stdin().read_line(&mut site_keyword).unwrap_or(0);
-    println! ("=============================================");
     let file_name: String = site_keyword.trim().to_owned() + ".jrpm";
     let mut file_full_path = home::home_dir().expect("Home not found!");
     file_full_path.push(".jrpm");
@@ -99,6 +96,23 @@ fn add_site() -> i32
         if user_confirmation.trim().ne(&continue_pass) { return 1; }
         else { println! ("You've selected to overwrite your password."); }
     }
+    println! ("=============================================");
+
+    // Prompt the user for their password
+    println! ("You know the whole thing about passwords; use");
+    println! ("upper and lowercase, numbers symbols and");
+    println! ("letters, etc. to be secure. This program");
+    println! ("won't make you do any of that, but you should");
+    println! ("Enter your password to this site:");
+    let user_pass = String::new();
+    std::io::stdin().read_line(&mut site_keyword).unwrap_or(0);
+    println! ("=============================================");
+
+    // Now we have the path of the file to write to.
+    // Now, declare a new Encoder and encrypt the password
+    let pass_encoder = crypto::Encoder::new(&user_pass);
+    pass_encoder.generate_encryption();
+    let encrypted_password = pass_encoder.encoded_pass;
     0
 }
 

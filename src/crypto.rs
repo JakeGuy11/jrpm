@@ -4,8 +4,7 @@ use rand::Rng;
 pub struct Encoder
 {
     raw_pass: String,
-    pass_site: String,
-    encoded_pass: String
+    pub encoded_pass: String
 }
 
 impl Encoder
@@ -24,12 +23,16 @@ impl Encoder
         key
     }
 
-    pub fn new (password: &str, site: &str) -> Encoder
+    pub fn generate_encryption(&self)
+    {
+
+    }
+
+    pub fn new (password: &String) -> Encoder
     {
         Encoder
         {
             raw_pass: password.to_string(),
-            pass_site: site.to_string(),
             encoded_pass: "".to_string()
         }
     }
